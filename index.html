@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>playGround</title>
+	<!-- <script src='./style.js'></script> -->
+</head>
+<body>
+  <div id="app">
+    <sub-route :todos="todos"></sub-route>
+    <p v-html='html'></p>
+    <p v-html='html' v-once></p>
+    <button :disabled='ifBtnDisabled'>I will be disabled</button>
+    <button @click='ifBtnDisabled = !ifBtnDisabled'>switch</button>
+    <p>{{this.$data}}</p>
+  </div>
+  <script src='./vendor.js'></script>
+  <script src='./bundle.js'></script>
+</body>
+</html>
