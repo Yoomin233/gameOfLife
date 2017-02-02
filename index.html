@@ -2,19 +2,22 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>playGround</title>
-	<!-- <script src='./style.js'></script> -->
+	<title>gameOfLife</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </head>
 <body>
-  <div id="app">
-    <sub-route :todos="todos"></sub-route>
-    <p v-html='html'></p>
-    <p v-html='html' v-once></p>
-    <button :disabled='ifBtnDisabled'>I will be disabled</button>
-    <button @click='ifBtnDisabled = !ifBtnDisabled'>switch</button>
-    <p>{{this.$data}}</p>
-  </div>
-  <script src='./vendor.js'></script>
+  <canvas></canvas>
+  <button class="start">Start</button>
+  <button class="pause">Pause</button>
+  <p>进化间隔时间: <input type="text" placeholder="update time" value='500' class='evolveTime'></p>
+  <p class="generation">Generation: </p>
+  <p class="livingCells">Living cells count: </p>
   <script src='./bundle.js'></script>
 </body>
 </html>
