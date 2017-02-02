@@ -8,16 +8,188 @@
     html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
+      position: relative;
+    }
+    div.wrapper {
+      height: calc(100% - 100vw);
+      position: relative;
+    }
+    div.wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      box-shadow: 0 0 5px #444;
+    }
+    div.rulesTrigger {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 3;
+      padding: 1em;
+      background-color: rgba(0, 0, 0, .1);
+      color: #444;
+    }
+    div.settings {
+      background-color: #eee;
+      padding: 0 1em;
+      height: 100%;
+      box-sizing: border-box;
+      overflow-y: scroll;
+      position: relative;
+    }
+    button {
+      font-size: 1.2em;
+      border: 1px solid #4285f4;
+      border-bottom-width: 2px;
+      background-color: inherit;
+      color: inherit;
+    }
+    input, select {
+      color: inherit;
+    }
+    p {
+      color: #111;
+    }
+    p.copyRight{
+      font-size: .8em;
+      color: #888;
+      text-align: center;
+    }
+    a {
+      color: #888;
+    }
+    p.buttons {
+      text-align: center;
+    }
+    div.guide, div.rules {
+      width: 80vw;
+      position: absolute;
+      z-index: 1;
+      left: 10vw;
+      top: 10vw;
+      text-align: center;
+      border: 1px dashed #666;
+      padding: 0 .5em;
+      box-sizing: border-box;
+      display: none;
+    }
+    div.rules {
+      width: 90vw;
+      left: 5vw;
+      top: 10vw;
+      opacity: 0;
+      text-align: left;
+      overflow-y: scroll;
+      background-color: rgba(0, 0, 0, .8);
+      z-index: 5;
+      transition: all .5s ease;
+      border: none;
+    }
+    div.rules p, div.rules ul {
+      color: #ddd;
+    }
+    div.rules p:last-of-type {
+      text-align: center;
+    }
+    div.guide span, div.rules span {
+      display: inline-block;
+      border-radius: 100%;
+      border: 1px solid black;
+      width: 1.5em;
+      height: 1.5em;
+      line-height: 1.5em;
     }
   </style>
 </head>
 <body>
   <canvas></canvas>
-  <button class="start">Start</button>
-  <button class="pause">Pause</button>
-  <p>进化间隔时间: <input type="text" placeholder="update time" value='500' class='evolveTime'></p>
-  <p class="generation">Generation: </p>
-  <p class="livingCells">Living cells count: </p>
+  <div class="guide">
+    <p>欢迎来到生命游戏!</p>
+    <p>触摸/滑动以在画板上创造生命, 或者选择下方的一个预置; Start开始进化, Pause暂停进化, Clear重新来过!</p>
+    <p><span>X</span></p>
+    <p><input type="checkbox" id='showAgain' name='showAgain'><label for="showAgain">不再显示</label></p>
+  </div>
+  <div class="rules">
+    <p>生命游戏中，对于任意细胞，规则如下：</p>
+    <p>每个细胞有两种状态-存活或死亡，每个细胞与以自身为中心的周围八格细胞产生互动。（如图，黑色为存活，白色为死亡）</p>
+    <ul>
+      <li>
+        当前细胞为存活状态时，当周围低于2个（不包含2个）存活细胞时，该细胞变成死亡状态。（模拟生命数量稀少） 
+      </li>
+      <li>
+        当前细胞为存活状态时，当周围有2个或3个存活细胞时， 该细胞保持原样。
+      </li>
+      <li>
+        当前细胞为存活状态时，当周围有3个以上的存活细胞时，该细胞变成死亡状态。（模拟生命数量过多）
+      </li>
+      <li>
+        当前细胞为死亡状态时，当周围有3个存活细胞时，该细胞变成存活状态。 （模拟繁殖）
+      </li>
+    </ul>
+    <p><a href="https://zh.wikipedia.org/wiki/%E5%BA%B7%E5%A8%81%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F">wikipedia - 康威生命游戏</a></p>
+    <p><span>X</span></p>
+  </div>
+  <div class="wrapper">
+    <div class="rulesTrigger">
+      规则说明
+    </div>
+    <div class="settings">
+        <p class="generation">Generation: </p>
+        <p class="livingCells">Living cells count: </p>
+        <hr> 
+        <p class="buttons">
+          <button class="start">Start</button>
+          <button class="pause">Pause</button>
+          <button class='clear'>Clear</button>
+        </p>
+        <hr>
+        <p>世界尺寸: 
+          <select name="size" id="size">
+            <option value="30">30*30</option>
+            <option value="40">40*40</option>
+            <option value="50">50*50</option>
+            <option value="60">60*60</option>
+            <option value="70">70*70</option>
+            <option value="80">80*80</option>
+          </select>
+        </p>
+        <p>
+          选择预置: 
+          <select name="" id="mode">
+            <option value="0">
+              draw yourself
+            </option>
+            <option value="1">
+              acorn
+            </option>
+            <option value="2">
+              beacon
+            </option>
+            <option value="3">
+              die hard
+            </option>
+            <option value="4">
+              figure eight
+            </option>
+            <option value="5">
+              tumbler
+            </option>
+            <option value="6">
+              glider gun
+            </option>
+          </select>
+        </p>
+        <p>进化间隔时间: <input type="number" placeholder="update time" value='200' class='evolveTime'></p>
+        <hr>
+        <p class='copyRight'>by <a href="https://github.com/YueminHu?tab=repositories">hymin</a></p>
+        <p class='copyRight'>2017-02-02</p>
+        <p class='copyRight'>license: MIT</p>
+      </div>
+  </div>
   <script src='./bundle.js'></script>
 </body>
 </html>
