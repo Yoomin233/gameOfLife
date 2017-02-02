@@ -1,1 +1,1 @@
-## Conway's Game of Life JavaScript Implementation
+## Conway's Game of Life JavaScript Implementation..
