@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "standard",
     "dev": "env DEBUG=true webpack-dev-server --hot --inline",
     "deploy": "NODE_ENV=production webpack -p"
   },
@@ -17,6 +17,7 @@
     "css-loader": "^0.26.1",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
+    "standard": "^8.6.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.0",
